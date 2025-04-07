@@ -46,7 +46,7 @@ export class UserController {
     @CurrentUser() user: UserEntity,
     @CurrentLanguage() lang: string,
   ) {
-    this.userService.getAllUsers(lang);
+    return this.userService.getAllUsers(lang);
   }
 
   @ApiOperation({ summary: "Get all deleted users" })
