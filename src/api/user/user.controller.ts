@@ -196,15 +196,16 @@ export class UserController {
       required: [],
     },
   })
+  @Patch('me')
   async updateProfile(
-    @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
     @CurrentUser() updatedBy: UserEntity,
     @CurrentLanguage() lang: string,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.userService.updateUser(id, updateUserDto, updatedBy, lang, file);
+    return this.userService.updateUser(updatedBy.id, updateUserDto, updatedBy, lang, file);
   }
+
 
   @ApiOperation({ summary: "Soft delete profile" })
   @ApiResponse({ status: 200, description: "User soft deleted" })

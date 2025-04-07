@@ -50,7 +50,15 @@ export class AuthService {
             throw new UnauthorizedException('Invalid email or password.');
         }
 
+        // Konsolga kiritilgan parol va saqlangan hash parolni chiqarish
+        console.log('Kiritilgan parol:', password);
+        console.log('Hash qilingan parol (DBda saqlangan):', user.password);
+
         const isPasswordValid = await BcryptEncryption.compare(password, user.password);
+
+        // Parol mosligini tekshirish va konsolga chiqarish
+        console.log('Parol mos keladi:', isPasswordValid);
+
         if (!isPasswordValid) {
             throw new UnauthorizedException('Invalid email or password.');
         }
@@ -68,6 +76,7 @@ export class AuthService {
             ...tokens,
         };
     }
+
     // ✅ Update password
     async updatePassword(userId: string, updatePasswordDto: UpdatePasswordDto) {
         const { currentPassword, newPassword } = updatePasswordDto;
