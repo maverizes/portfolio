@@ -26,8 +26,8 @@ export class Application {
 
 
     const swagger = new DocumentBuilder()
-      .setTitle('API nomi')
-      .setDescription('API tavsifi')
+      .setTitle('DANGASA FRONTCHIM UCHUN SWAGGER')
+      .setDescription('SPECIAL')
       .setVersion('1.0')
       .addBearerAuth(  // Bearer Token sozlamalari
         {
