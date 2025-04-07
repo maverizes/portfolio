@@ -10,6 +10,7 @@ import {
     MinLength,
 } from 'class-validator';
 import { Roles } from 'src/common/database/Enums';
+import { CreateDateColumn } from 'typeorm';
 
 export class CreateUserDto {
     @ApiProperty({ example: 'John', description: 'User first name' })
@@ -30,6 +31,10 @@ export class CreateUserDto {
     @ApiProperty({ example: 'john@example.com', description: 'User email' })
     @IsEmail({}, { message: 'Invalid email format' })
     email: string;
+
+    @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
+    createdAt: Date;
+
 
     @ApiProperty({ example: 'Password123!', description: 'User password' })
     @IsString({ message: 'Password must be a string' })
