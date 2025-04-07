@@ -29,17 +29,7 @@ export class RegisterDto {
         example: 'Doe',
         description: 'Foydalanuvchining familiyasi',
     })
-    @IsString({ message: 'Familiya matn shaklida bo‘lishi kerak' })
-    @IsNotEmpty({ message: 'Familiya majburiy' })
-    last_name: string;
 
-    @ApiProperty({
-        example: '15.08.1995',
-        description: 'Tug‘ilgan sana (kun.oy.yil formatida)',
-    })
-    @IsString({ message: 'Tug‘ilgan sana matn shaklida bo‘lishi kerak' })
-    @IsNotEmpty({ message: 'Tug‘ilgan sana majburiy' })
-    birth_date: string;
 
     @ApiProperty({
         example: 'StrongPassword123!',

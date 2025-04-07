@@ -55,34 +55,19 @@ export class AuthService {
             throw new UnauthorizedException('Invalid email or password.');
         }
 
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        await this.redisService.set(`login_otp:${user.id}`, otp, 300); // 5 min
-
-        await this.customMailerService.sendOtpEmail(user.email, otp);
+        const tokens = await this.generateTokens(user.id, user.email, user.role);
 
         return {
-            message: 'OTP sent to your email.',
-            userId: user.id,
+            message: `Welcome to your profile, ${user.name}`,
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+            },
+            ...tokens,
         };
     }
-
-    // ✅ Login Step 2: Verify OTP and return tokens
-    async verifyLoginOtp(userId: string, otp: string) {
-        const storedOtp = await this.redisService.get(`login_otp:${userId}`);
-        if (!storedOtp || storedOtp !== otp) {
-            throw new UnauthorizedException('Invalid or expired OTP.');
-        }
-
-        const user = await this.userRepository.findOne({ where: { id: userId } });
-        if (!user) {
-            throw new NotFoundException('User not found.');
-        }
-
-        await this.redisService.deleteByText(`login_otp:${userId}`);
-
-        return this.generateTokens(user.id, user.email, user.role);
-    }
-
     // ✅ Update password
     async updatePassword(userId: string, updatePasswordDto: UpdatePasswordDto) {
         const { currentPassword, newPassword } = updatePasswordDto;
