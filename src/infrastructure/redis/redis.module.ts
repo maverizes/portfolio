@@ -9,7 +9,8 @@ import { RedisCacheService } from './redis.service';
         ConfigModule,
         NestRedisModule.forRoot({
             type: 'single',
-            url: config.REDIS_URL
+            url: config.REDIS_URL,
+            tls: {}, 
         }),
     ],
     providers: [RedisCacheService],
